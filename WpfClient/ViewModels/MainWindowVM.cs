@@ -29,11 +29,11 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
 
         public ICommand LoadCommand { get; private set; }
 
-        readonly ITransactionHandlerService TransactionHandlerService;
+        readonly ITransactionHandlerService transactionHandlerService;
 
-        public MainWindowVM(ITransactionHandlerService TransactionHandlerService)
+        public MainWindowVM(ITransactionHandlerService transactionHandlerService)
         {
-            this.TransactionHandlerService = TransactionHandlerService;
+            this.transactionHandlerService = transactionHandlerService;
             Transactions = new ObservableCollection<TransactionModel>();
 
             if (IsInDesignMode)
@@ -48,7 +48,7 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
 
             LoadCommand = new RelayCommand(() =>
             {
-                var Transactions = this.TransactionHandlerService.GetAll();
+                var Transactions = this.transactionHandlerService.GetAll();
                 Transactions.Clear();
 
                 foreach (var Transaction in Transactions)
@@ -57,10 +57,10 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
                 }
             });
 
-            AddCommand = new RelayCommand(() => this.TransactionHandlerService.AddTransaction(Transactions));
-            ModifyCommand = new RelayCommand(() => this.TransactionHandlerService.ModifyTransaction(Transactions, CurrentTransaction));
-            DeleteCommand = new RelayCommand(() => this.TransactionHandlerService.DeleteTransaction(Transactions, CurrentTransaction));
-            ViewCommand = new RelayCommand(() => this.TransactionHandlerService.ViewTransaction(CurrentTransaction));
+            AddCommand = new RelayCommand(() => this.transactionHandlerService.AddTransaction(Transactions));
+            ModifyCommand = new RelayCommand(() => this.transactionHandlerService.ModifyTransaction(Transactions, CurrentTransaction));
+            DeleteCommand = new RelayCommand(() => this.transactionHandlerService.DeleteTransaction(Transactions, CurrentTransaction));
+            ViewCommand = new RelayCommand(() => this.transactionHandlerService.ViewTransaction(CurrentTransaction));
         }
 
         public MainWindowVM() : this(IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<ITransactionHandlerService>())

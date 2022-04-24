@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModels="clr-namespace:WpfClient.ViewModels"
-        xmlns:Models="clr-namespace:WpfClient.Models"
+        xmlns:ViewModels="clr-namespace:U02B40_HFT_2021221.WpfClient.ViewModels"
+        xmlns:Models="clr-namespace:U02B40_HFT_2021221.WpfClient.Models"
         mc:Ignorable="d"
         Title="Transaction handler" Height="450" Width="800" Loaded="WindowLoaded" Closing="WindowClose">
     <Window.Resources>
-        <ViewModels:MainWindowVM x:Key="VM" />
+        <ViewModels:MainWindowVM x:Key="VM"/>
         <DataTemplate x:Key="TransactionListTemplate" DataType="Models:TransactionModel">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />

@@ -14,6 +14,9 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -30,12 +33,12 @@
       
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Id}" Grid.Row="0" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Type}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
-        <TextBox Margin="3" Text="{Binding CurrentTransaction.TransferTime}" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
+        <DatePicker Margin="3" Text="{Binding CurrentTransaction.TransferTime}" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Amount}" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Currency}" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.AccountId}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="3" Grid.ColumnSpan="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="6" Grid.ColumnSpan="2">
             <Button Margin="5" Content="OK" IsDefault="True" Click="OkClick" MinWidth="50" />
             <Button Margin="5" Content="Cancel" IsCancel="True" Click="CancelClick" MinWidth="50" Visibility="{Binding CancelButtonVisibility}" />
         </StackPanel>

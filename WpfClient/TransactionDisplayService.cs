@@ -7,9 +7,9 @@ namespace U0240_HFT_2021221.WpfClient
 {
     public class TransactionDisplayService : ITransactionDisplayService
     {
-        public void Display(TransactionModel Transaction)
+        public void Display(TransactionModel transaction)
         {
-            var window = new TransactionEditorWindow(Transaction, false);
+            var window = new TransactionEditorWindow(transaction, false);
 
             window.Show();
         }

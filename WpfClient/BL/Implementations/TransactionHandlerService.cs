@@ -8,21 +8,21 @@ using U02B40_HFT_2021221.WpfClient.BL.Interfaces;
 using U02B40_HFT_2021221.WpfClient.Infrastructure;
 using U02B40_HFT_2021221.Models.DTOs;
 
-namespace U02B40_HFT_2021221.WpfClient.BL.Implementation
+namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
 {
     public class TransactionHandlerService : ITransactionHandlerService
     {
         readonly IMessenger messenger;
         readonly ITransactionEditorService editorService;
-        readonly ITransactionDisplayService TransactionDisplayService;
+        readonly ITransactionDisplayService transactionDisplayService;
         HttpServices httpService;
 
-        public TransactionHandlerService(IMessenger messenger, ITransactionEditorService editorService, ITransactionDisplayService TransactionDisplayService) // Should come from IoC <- dependency injection
+        public TransactionHandlerService(IMessenger messenger, ITransactionEditorService editorService, ITransactionDisplayService transactionDisplayService) // Should come from IoC <- dependency injection
         {
             this.messenger = messenger;
             this.editorService = editorService;
-            this.TransactionDisplayService = TransactionDisplayService;
-            httpService = new HttpServices("Transaction", "http://localhost:24577/api/"); // This can be taken via IoC in the future
+            this.transactionDisplayService = transactionDisplayService;
+            httpService = new HttpServices("Transaction", "http://localhost:60195/api/"); // This can be taken via IoC in the future
         }
 
         public void AddTransaction(IList<TransactionModel> collection)
@@ -172,7 +172,7 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementation
 
         public void ViewTransaction(TransactionModel Transaction)
         {
-            TransactionDisplayService.Display(Transaction);
+            transactionDisplayService.Display(Transaction);
         }
     }
 }
