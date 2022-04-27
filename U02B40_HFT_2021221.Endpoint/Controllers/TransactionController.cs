@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using U02B40_HFT_2021221.Logic.Interfaces;
 using U02B40_HFT_2021221.Models;
+using U02B40_HFT_2021221.Models.DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,19 +38,28 @@ namespace U02B40_HFT_2021221.Endpoint.Controllers
         // POST api/<TransactionController>
         [HttpPost]
         [ActionName("Create")]
-        public ApiResult Post(Transaction transaction)
+        public ApiResult Post(TransactionDTO transaction)
         {
             var result = new ApiResult(true);
 
 
             try
             {
-                transactionLogic.Create(transaction);
+                transactionLogic.Create(new Transaction
+                {
+                    Id = transaction.Id,
+                    TransferTime = transaction.TransferTime,
+                    Type = transaction.Type,
+                    Amount = transaction.Amount,
+                    Currency = transaction.Currency,
+                    AccountId = transaction.AccountId
+                }) ;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message};
             }
 
 
@@ -68,10 +78,11 @@ namespace U02B40_HFT_2021221.Endpoint.Controllers
             {
                 transactionLogic.Update(transaction);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
 
@@ -89,10 +100,11 @@ namespace U02B40_HFT_2021221.Endpoint.Controllers
             {
                 transactionLogic.Delete(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 result.IsSuccess = false;
+                result.Messages = new List<string>() { ex.Message };
             }
 
 

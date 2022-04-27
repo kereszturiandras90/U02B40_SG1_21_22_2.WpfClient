@@ -59,7 +59,7 @@ namespace U02B40_HFT_2021221.Logic.Services
         {
             // TODO check access
 
-            if(entity.Type.Length > 6)
+            if(entity.Type?.Length > 6)
             {
                 throw new ArgumentOutOfRangeException("the length of the transaction type must shorter or equal to 6 characters");
             }

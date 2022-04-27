@@ -27,12 +27,12 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
 
         public void AddTransaction(IList<TransactionModel> collection)
         {
-            TransactionModel TransactionToEdit = null;
+            TransactionModel transactionToEdit = null;
             bool operationFinished = false;
 
             do
             {
-                var newTransaction = editorService.EditTransaction(TransactionToEdit);
+                var newTransaction = editorService.EditTransaction(transactionToEdit);
 
                 if (newTransaction != null)
                 {
@@ -46,12 +46,12 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
                         Type = newTransaction.Type
                     }) ;
 
-                    TransactionToEdit = newTransaction;
+                    transactionToEdit = newTransaction;
                     operationFinished = operationResult.IsSuccess;
 
                     if (operationResult.IsSuccess)
                     {
-                        //collection.Add(newTransaction);
+                       // collection.Add(newTransaction);
                         RefreshCollectionFromServer(collection);
 
                         SendMessage("Transaction add was successful");
@@ -85,54 +85,64 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
             messenger.Send(messages, "BlOperationResult");
         }
 
-        public void ModifyTransaction(IList<TransactionModel> collection, TransactionModel Transaction)
+        public void ModifyTransaction(IList<TransactionModel> collection, TransactionModel transaction)
         {
-            TransactionModel TransactionToEdit = Transaction;
+            TransactionModel transactionToEdit = transaction;
             bool operationFinished = false;
 
-            do
+            if (transactionToEdit == null)
             {
-                var editedTransaction = editorService.EditTransaction(TransactionToEdit);
-
-                if (editedTransaction != null)
+                SendMessage("Please select an item to be modified!");
+                operationFinished = true;
+            }
+            else
+            {
+                do
                 {
-                    var operationResult = httpService.Update(new TransactionDTO()
-                    {
-                        Id = Transaction.Id, // This prop cannot be changed
-              
-                        Amount = editedTransaction.Amount,
-                        Currency = editedTransaction.Currency,
-                        AccountId = editedTransaction.AccountId,
-                        TransferTime = editedTransaction.TransferTime,
-                        Type = editedTransaction.Type
-                    });
+                    var editedTransaction = editorService.EditTransaction(transactionToEdit);
 
-                    TransactionToEdit = editedTransaction;
-                    operationFinished = operationResult.IsSuccess;
-
-                    if (operationResult.IsSuccess)
+                    if (editedTransaction != null)
                     {
-                        RefreshCollectionFromServer(collection);
-                        SendMessage("Transaction modification was successful");
+                        var operationResult = httpService.Update(new TransactionDTO()
+                        {
+                            Id = transaction.Id, // This prop cannot be changed
+
+                            Amount = editedTransaction.Amount,
+                            Currency = editedTransaction.Currency,
+                            AccountId = editedTransaction.AccountId,
+                            TransferTime = editedTransaction.TransferTime,
+                            Type = editedTransaction.Type
+                        });
+
+                        transactionToEdit = editedTransaction;
+                        operationFinished = operationResult.IsSuccess;
+
+                        if (operationResult.IsSuccess)
+                        {
+                            RefreshCollectionFromServer(collection);
+                            SendMessage("Transaction modification was successful");
+                        }
+                        else
+                        {
+                            SendMessage(operationResult.Messages.ToArray());
+                        }
                     }
                     else
                     {
-                        SendMessage(operationResult.Messages.ToArray());
+                        SendMessage("Transaction modification has cancelled");
+                        operationFinished = true;
                     }
-                }
-                else
-                {
-                    SendMessage("Transaction modification has cancelled");
-                    operationFinished = true;
-                }
-            } while (!operationFinished);
+                } while (!operationFinished);
+            }
+
+            
         }
 
-        public void DeleteTransaction(IList<TransactionModel> collection, TransactionModel Transaction)
+        public void DeleteTransaction(IList<TransactionModel> collection, TransactionModel transaction)
         {
-            if (Transaction != null)
+            if (transaction != null)
             {
-                var operationResult = httpService.Delete(Transaction.Id);
+                var operationResult = httpService.Delete(transaction.Id);
 
                 if (operationResult.IsSuccess)
                 {
@@ -153,9 +163,9 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
         public IList<TransactionModel> GetAll()
         {
             // This data comes from DB, API or something like that
-            var Transactions = httpService.GetAll<Transaction>();
+            var transactions = httpService.GetAll<Transaction>();
 
-            return Transactions.Select(x => new TransactionModel(x.Id, x.Type, x.TransferTime, x.Amount, x.Currency, x.AccountId)).ToList(); // TODO: use AutoMapper in the future
+            return transactions.Select(x => new TransactionModel(x.Id, x.Type, x.TransferTime, x.Amount, x.Currency, x.AccountId)).ToList(); // TODO: use AutoMapper in the future
         }
 
       /*  public IList<BrandModel> GetAllBrands()
@@ -170,9 +180,17 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
             return brands; // Note: at this point we have to map the data
         }*/
 
-        public void ViewTransaction(TransactionModel Transaction)
+        public void ViewTransaction(TransactionModel transaction)
         {
-            transactionDisplayService.Display(Transaction);
+            if (transaction == null)
+            {
+                SendMessage("Please select an item to be displayed!");
+
+            }
+            else
+            {
+                transactionDisplayService.Display(transaction);
+            }
         }
     }
 }

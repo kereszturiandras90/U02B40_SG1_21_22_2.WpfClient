@@ -48,12 +48,12 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
 
             LoadCommand = new RelayCommand(() =>
             {
-                var Transactions = this.transactionHandlerService.GetAll();
+                var transactions = this.transactionHandlerService.GetAll();
                 Transactions.Clear();
 
-                foreach (var Transaction in Transactions)
+                foreach (var transaction in transactions)
                 {
-                    Transactions.Add(Transaction);
+                    Transactions.Add(transaction);
                 }
             });
 

@@ -31,9 +31,9 @@
         <Label Content="AccountId" HorizontalAlignment="Right" Grid.Row="5" />
 
       
-        <TextBox Margin="3" Text="{Binding CurrentTransaction.Id}" Grid.Row="0" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
+        <TextBox Margin="3" Text="{Binding CurrentTransaction.Id}" Grid.Row="0" Grid.Column="1" IsEnabled="False"/>
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Type}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
-        <DatePicker Margin="3" Text="{Binding CurrentTransaction.TransferTime}" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
+        <DatePicker Margin="3" SelectedDate="{Binding CurrentTransaction.TransferTime}" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding EditEnabled}"  />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Amount}" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Currency}" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.AccountId}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />

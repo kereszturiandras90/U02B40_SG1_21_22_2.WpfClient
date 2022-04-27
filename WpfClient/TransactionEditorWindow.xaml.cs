@@ -17,21 +17,30 @@ namespace U02B40_HFT_2021221.WpfClient
             InitializeComponent();
             Transaction = transaction == null
                 ? new TransactionModel()
-                : new TransactionModel(Transaction);
+                : new TransactionModel(transaction);
 
             this.enableEdit = enableEdit;
         }
 
         private void OkClick(object sender, RoutedEventArgs e)
         {
-            if (enableEdit)
+            if (Transaction == null)
             {
-                DialogResult = true;
+                MessageBox.Show("Please, do not leave the details empty!");
+                DialogResult = false;
             }
             else
             {
-                Close();
+                if (enableEdit)
+                {
+                    DialogResult = true;
+                }
+                else
+                {
+                    Close();
+                }
             }
+           
         }
 
         private void CancelClick(object sender, RoutedEventArgs e)
