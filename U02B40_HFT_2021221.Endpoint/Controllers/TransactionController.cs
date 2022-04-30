@@ -69,14 +69,22 @@ namespace U02B40_HFT_2021221.Endpoint.Controllers
         // PUT api/<TransactionController>/5
         [HttpPut]
         [ActionName("Update")]
-        public ApiResult Put(Transaction transaction)
+        public ApiResult Put(TransactionDTO transaction)
         {
             var result = new ApiResult(true);
 
 
             try
             {
-                transactionLogic.Update(transaction);
+                transactionLogic.Update(new Transaction() { 
+                    Id = transaction.Id,
+                    Amount = transaction.Amount,
+                    AccountId = transaction.AccountId,
+                    TransferTime = transaction.TransferTime,
+                    Type = transaction.Type,
+                    Currency = transaction.Currency,
+
+                });
             }
             catch (Exception ex)
             {

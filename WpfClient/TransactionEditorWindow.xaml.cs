@@ -60,6 +60,7 @@ namespace U02B40_HFT_2021221.WpfClient
             var vm = (TransactionEditorVM)Resources["VM"];
             vm.CurrentTransaction = Transaction;
             vm.EditEnabled = enableEdit;
+            
         }
     }
 }

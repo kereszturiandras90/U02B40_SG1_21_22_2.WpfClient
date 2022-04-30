@@ -41,12 +41,12 @@ namespace U02B40_HFT_2021221.Logic.Services
 
             if(entity.TransferTime > DateTime.Now)
             {
-                throw new InvalidOperationException("Please enter a valid time for the transaction!");
+                throw new ApplicationException("Please enter a valid time for the transaction!");
             }
 
             if (entity.Id == ' ')
             {
-                throw new ArgumentNullException("The transaction identifier must be available");
+                throw new ApplicationException("The transaction identifier must be available");
             }
 
             var result = _transactionRepository.Create(entity);
@@ -61,7 +61,7 @@ namespace U02B40_HFT_2021221.Logic.Services
 
             if(entity.Type?.Length > 6)
             {
-                throw new ArgumentOutOfRangeException("the length of the transaction type must shorter or equal to 6 characters");
+                throw new ApplicationException("the length of the transaction type must shorter or equal to 6 characters");
             }
 
             // TODO: map

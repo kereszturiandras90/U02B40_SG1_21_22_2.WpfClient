@@ -36,6 +36,7 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
 
                 if (newTransaction != null)
                 {
+                    //newTransaction.TransferTime = System.DateTime.Now;
                     var operationResult = httpService.Create(new TransactionDTO()
                     {
                         Id = newTransaction.Id,

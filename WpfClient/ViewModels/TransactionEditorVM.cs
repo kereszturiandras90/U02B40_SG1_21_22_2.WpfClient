@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using U02B40_HFT_2021221.WpfClient.Models;
 using U02B40_HFT_2021221.WpfClient.BL.Interfaces;
+using System;
 
 namespace U02B40_HFT_2021221.WpfClient.ViewModels
 {
@@ -22,18 +23,19 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
             }
         }
 
-      //  private BrandModel brandModel;
 
-     /*   public BrandModel SelectedBrand
-        {
-            get { return brandModel; }
-            set {
-                Set(ref brandModel, value);
-                currentTransaction.BrandId = brandModel?.Id ?? 0;
-            }
-        }*/
+        //  private BrandModel brandModel;
 
-       // public IList<BrandModel> AvailableBrands { get; private set; }
+        /*   public BrandModel SelectedBrand
+           {
+               get { return brandModel; }
+               set {
+                   Set(ref brandModel, value);
+                   currentTransaction.BrandId = brandModel?.Id ?? 0;
+               }
+           }*/
+
+        // public IList<BrandModel> AvailableBrands { get; private set; }
 
         private bool editEnabled;
 
@@ -52,6 +54,13 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
         public TransactionEditorVM(ITransactionHandlerService TransactionHandlerService)
         {
             CurrentTransaction = new TransactionModel();
+
+            if (CurrentTransaction.TransferTime == new DateTime(0001, 01, 01))
+            {
+                CurrentTransaction.TransferTime = DateTime.Today;
+            }
+
+         
 
            /* if (IsInDesignModeStatic)
             {

@@ -19,6 +19,7 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
+
                 <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0" />
                 <Label Content="{Binding Type}" HorizontalAlignment="Center" Grid.Column="1" />
                 <Label Content="{Binding TransferTime}" HorizontalAlignment="Center" Grid.Column="2" />
@@ -30,11 +31,25 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource VM}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Transactions}" SelectedItem="{Binding CurrentTransaction}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource TransactionListTemplate}" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+        <TabPanel HorizontalAlignment="Stretch" Grid.Row="0" Width="800">
+            <Grid>
+                <Grid.ColumnDefinitions>
+
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Label Content="TransactionId" Grid.Column="0" Margin="32,7,-39,0" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.679,0.294"></Label>
+            <Label Content="Type"  Grid.Column="1" Margin="103,4,-114,0" Height="26" VerticalAlignment="Top"></Label>
+            <Label Content="Date" Grid.Column="2" RenderTransformOrigin="6.004,0.81" Margin="185,4,-223,-4"></Label>
+            <Label Content="Amount" Grid.Column="3" RenderTransformOrigin="9.193,0.903" Margin="301,4,-302,-4"></Label>
+            <Label Content="Currency" Grid.Column="4" RenderTransformOrigin="12.013,0.872" Margin="368,4,-380,-4"></Label>
+            <Label Content="AccountId" Grid.Column="5" Margin="450,4,-494,-4" RenderTransformOrigin="0.122,0.594"></Label>
+        </TabPanel>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Transactions}" SelectedItem="{Binding CurrentTransaction}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource TransactionListTemplate}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
             <Button Content="Load" Margin="5" MinWidth="50" Command="{Binding LoadCommand}" />
             <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewCommand}" />
             <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddCommand}" />
