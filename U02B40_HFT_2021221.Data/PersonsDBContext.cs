@@ -53,15 +53,15 @@ namespace U02B40_HFT_2021221.Data
 
 
 
-            Transaction t1 = new  Transaction { Id = 001, AccountId = 001, TransferTime = new DateTime(2011, 12, 25), Amount = -10000 };
-            Transaction t2 = new Transaction { Id = 002, AccountId = 002, TransferTime = new DateTime(2013, 12, 25), Amount = 15000 };
-            Transaction t3 = new Transaction { Id = 003, AccountId = 002, TransferTime = new DateTime(2015, 12, 25), Amount = 20000 };
-            Transaction t4 = new Transaction { Id = 004, AccountId = 003, TransferTime = new DateTime(2017, 12, 25), Amount = 30000 };
-            Transaction t5 = new Transaction { Id = 005, AccountId = 003, TransferTime = new DateTime(2019, 12, 25), Amount = 10000 };
-            Transaction t6 = new Transaction { Id = 006, AccountId = 003, TransferTime = new DateTime(2019, 12, 25), Amount = 20000 };
-            Transaction t7 = new Transaction { Id = 007, AccountId = 002, TransferTime = new DateTime(2018, 11, 25), Amount = 79000 };
-            Transaction t8 = new Transaction { Id = 008, AccountId = 001, TransferTime = new DateTime(2019, 10, 25), Amount = -90000 };
-            Transaction t9 = new Transaction { Id = 009, AccountId = 001, TransferTime = new DateTime(2019, 12, 26), Amount = 59000 };
+            Transaction t1 = new  Transaction { Id = 001, AccountId = 001, TransferTime = new DateTime(2011, 12, 25), Amount = -10000, Currency="USD", Type="DIV" };
+            Transaction t2 = new Transaction { Id = 002, AccountId = 002, TransferTime = new DateTime(2013, 12, 25), Amount = 15000, Currency="GBP", Type="INT" };
+            Transaction t3 = new Transaction { Id = 003, AccountId = 002, TransferTime = new DateTime(2015, 12, 25), Amount = 20000, Currency="JMF", Type="STO" };
+            Transaction t4 = new Transaction { Id = 004, AccountId = 003, TransferTime = new DateTime(2017, 12, 25), Amount = 30000, Currency="EUR", Type="DIV" };
+            Transaction t5 = new Transaction { Id = 005, AccountId = 003, TransferTime = new DateTime(2019, 12, 25), Amount = 10000, Currency="RON" , Type="INT"};
+            Transaction t6 = new Transaction { Id = 006, AccountId = 003, TransferTime = new DateTime(2019, 12, 25), Amount = 20000, Currency= "рубль", Type= "нахуй" };
+            Transaction t7 = new Transaction { Id = 007, AccountId = 002, TransferTime = new DateTime(2018, 11, 25), Amount = 79000, Currency="AUD", Type="STO" };
+            Transaction t8 = new Transaction { Id = 008, AccountId = 001, TransferTime = new DateTime(2019, 10, 25), Amount = -90000, Currency="HUF", Type="DIV" };
+            Transaction t9 = new Transaction { Id = 009, AccountId = 001, TransferTime = new DateTime(2019, 12, 26), Amount = 59000, Currency="EUR", Type="INT" };
 
             Account a1 = new Account { Id = 001, Name = "worker account", IsClosed = false, IsInactive = false };
             Account a2 =new Account { Id = 002, Name = "Ibizai Account", IsClosed = true, IsInactive = true };

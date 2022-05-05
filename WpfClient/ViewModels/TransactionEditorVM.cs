@@ -6,6 +6,7 @@ using System.Linq;
 using U02B40_HFT_2021221.WpfClient.Models;
 using U02B40_HFT_2021221.WpfClient.BL.Interfaces;
 using System;
+using System.Collections;
 
 namespace U02B40_HFT_2021221.WpfClient.ViewModels
 {
@@ -19,10 +20,55 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
             set 
             {
                 Set(ref currentTransaction, value);
-             //   SelectedBrand = AvailableBrands?.SingleOrDefault(x => x.Id == currentTransaction.BrandId);
+              SelectedAccount = AvailableAccounts?.SingleOrDefault(x => x.Id == currentTransaction.AccountId);
+                SelectedCurrency = AvailableCurrencies?.SingleOrDefault(x => x.Currency == currentTransaction.Currency);
+                SelectedType = AvailableTypes?.SingleOrDefault(x => x.Type == currentTransaction.Type);
             }
         }
 
+        private AccountModel accountModel;
+
+        public AccountModel SelectedAccount
+        {
+            get { return accountModel; }
+            set
+            {
+                Set(ref accountModel, value);
+                currentTransaction.AccountId = accountModel?.Id ?? 0;
+            }
+        }
+
+
+        private CurrencyModel currencyModel;
+
+        public CurrencyModel SelectedCurrency
+        {
+            get { return currencyModel; }
+            set
+            {
+                Set(ref currencyModel, value);
+                currentTransaction.Currency = currencyModel?.Currency ?? "USD";
+            }
+        }
+
+
+        private TypeModel typeModel;
+
+        public TypeModel SelectedType
+        {
+            get { return typeModel; }
+            set
+            {
+                Set(ref typeModel, value);
+                currentTransaction.Type = typeModel?.Type ?? "INT";
+            }
+        }
+
+        public IList<AccountModel> AvailableAccounts { get; private set; }
+
+        public IList<CurrencyModel> AvailableCurrencies { get; private set; }
+
+        public IList<TypeModel> AvailableTypes { get; private set; }
 
         //  private BrandModel brandModel;
 
@@ -60,25 +106,31 @@ namespace U02B40_HFT_2021221.WpfClient.ViewModels
                 CurrentTransaction.TransferTime = DateTime.Today;
             }
 
-         
+            AvailableAccounts =   TransactionHandlerService.GetAllAccounts();
 
-           /* if (IsInDesignModeStatic)
-            {
-                AvailableBrands = new List<BrandModel>()
-                {
-                    new BrandModel(1, "Mazda"),
-                    new BrandModel(2, "Opel"),
-                    new BrandModel(3, "BMW"),
-                };
+            AvailableCurrencies = TransactionHandlerService.GetAllCurrencies();
 
-                SelectedBrand = AvailableBrands[1]; // Should sets the brandId too
-                CurrentTransaction.Model = "Astra G";
-                CurrentTransaction.Price = 1750;
-            }
-            else
-            {
-              //  AvailableBrands = TransactionHandlerService.GetAllBrands();
-            }*/
+            AvailableTypes = TransactionHandlerService.GetAllTypes();
+
+
+
+            /* if (IsInDesignModeStatic)
+             {
+                 AvailableBrands = new List<BrandModel>()
+                 {
+                     new BrandModel(1, "Mazda"),
+                     new BrandModel(2, "Opel"),
+                     new BrandModel(3, "BMW"),
+                 };
+
+                 SelectedBrand = AvailableBrands[1]; // Should sets the brandId too
+                 CurrentTransaction.Model = "Astra G";
+                 CurrentTransaction.Price = 1750;
+             }
+             else
+             {
+               //  AvailableBrands = TransactionHandlerService.GetAllBrands();
+             }*/
         }
 
         public TransactionEditorVM() : this(IsInDesignModeStatic ? null: ServiceLocator.Current.GetInstance<ITransactionHandlerService>())

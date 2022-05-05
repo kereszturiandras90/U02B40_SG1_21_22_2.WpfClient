@@ -33,11 +33,30 @@
 
       
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Id}" Grid.Row="0" Grid.Column="1" IsEnabled="False"/>
-        <TextBox Margin="3" Text="{Binding CurrentTransaction.Type}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
+        <ComboBox Margin="3" ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding SelectedType}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding EditEnabled}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Type}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <DatePicker Margin="3" DisplayDate="{x:Static sys:DateTime.Now}" SelectedDate="{Binding CurrentTransaction.TransferTime}" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding EditEnabled}"  />
         <TextBox Margin="3" Text="{Binding CurrentTransaction.Amount}" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
-        <TextBox Margin="3" Text="{Binding CurrentTransaction.Currency}" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
-        <TextBox Margin="3" Text="{Binding CurrentTransaction.AccountId}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding EditEnabled}" />
+        <ComboBox Margin="3" ItemsSource="{Binding AvailableCurrencies}" SelectedItem="{Binding SelectedCurrency}" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding EditEnabled}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Currency}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox Margin="3" ItemsSource="{Binding AvailableAccounts}" SelectedItem="{Binding SelectedAccount}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding EditEnabled}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Id}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate> 
+        </ComboBox>
+      <!--  <TextBox Margin="3" Text="{Binding CurrentTransaction.AccountId}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding EditEnabled}" /> -->
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="6" Grid.ColumnSpan="2">
             <Button Margin="5" Content="OK" IsDefault="True" Click="OkClick" MinWidth="50" />

@@ -44,9 +44,14 @@ namespace U02B40_HFT_2021221.Logic.Services
                 throw new ApplicationException("Please enter a valid time for the transaction!");
             }
 
-            if (entity.Id == ' ')
+            /* if (entity.Id == ' ')
+             {
+                 throw new ApplicationException("The transaction identifier must be available");
+             }*/
+
+            if (entity.AccountId == default)
             {
-                throw new ApplicationException("The transaction identifier must be available");
+                throw new ApplicationException("Please enter a valid account id!");
             }
 
             var result = _transactionRepository.Create(entity);

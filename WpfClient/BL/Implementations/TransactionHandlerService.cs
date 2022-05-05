@@ -169,17 +169,70 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Implementations
             return transactions.Select(x => new TransactionModel(x.Id, x.Type, x.TransferTime, x.Amount, x.Currency, x.AccountId)).ToList(); // TODO: use AutoMapper in the future
         }
 
-      /*  public IList<BrandModel> GetAllBrands()
+        public IList<CurrencyModel> GetAllCurrencies()
         {
-            var brands = new List<BrandModel>()
-            {
-                new BrandModel(1, "Mazda"),
-                new BrandModel(2, "Opel"),
-                new BrandModel(3, "BMW"),
-            }; // TODO: get it from API endpoint!
+            // This data comes from DB, API or something like that
+          /*  var transactions = httpService.GetAll<Transaction>();
 
-            return brands; // Note: at this point we have to map the data
-        }*/
+            return transactions.Select(x =>  new CurrencyModel(x.Currency)).Distinct().ToList(); // TODO: use AutoMapper in the future */
+
+            var currencies = new List<CurrencyModel>()
+            {
+                new CurrencyModel("USD"),
+                new CurrencyModel("GBP"),
+                new CurrencyModel("JMF"),
+                new CurrencyModel("EUR"),
+                new CurrencyModel("AUD"),
+                new CurrencyModel("HUF")
+            };
+            return currencies;
+
+        }
+
+        public IList<TypeModel> GetAllTypes()
+        {
+            // This data comes from DB, API or something like that
+          /*  var transactions = httpService.GetAll<Transaction>();
+
+            return (transactions.Select(x => new TypeModel(x.Type))).Distinct().ToList(); // TODO: use AutoMapper in the future */
+
+            var types = new List<TypeModel>()
+            {
+                new TypeModel("DIV"),
+                new TypeModel("STO"),
+                new TypeModel("INT"),
+                new TypeModel("нахуй")
+            };
+            return types;
+        }
+
+        public IList<AccountModel> GetAllAccounts()
+        {
+            // This data comes from DB, API or something like that
+          /*  var accounts = httpService.GetAll<Account>();
+
+            return accounts.Select(x => new AccountModel(x.Id, x.Name)).ToList(); // TODO: use AutoMapper in the future */
+
+            var accaounts = new List<AccountModel>() {
+             new AccountModel(1, "Mazda"),
+                  new AccountModel(2, "Opel"),
+                  new AccountModel(3, "BMW"),
+                  };
+            return accaounts;
+        }
+
+        /*  public IList<BrandModel> GetAllBrands()
+          {
+              var brands = new List<BrandModel>()
+              {
+                  new BrandModel(1, "Mazda"),
+                  new BrandModel(2, "Opel"),
+                  new BrandModel(3, "BMW"),
+              }; // TODO: get it from API endpoint!
+
+              return brands; // Note: at this point we have to map the data
+          }*/
+
 
         public void ViewTransaction(TransactionModel transaction)
         {

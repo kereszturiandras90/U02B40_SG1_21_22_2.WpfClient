@@ -13,6 +13,10 @@ namespace U02B40_HFT_2021221.WpfClient.BL.Interfaces
 
         IList<TransactionModel> GetAll();
 
-      //  IList<BrandModel> GetAllBrands();
+        IList<AccountModel> GetAllAccounts();
+
+        IList<CurrencyModel> GetAllCurrencies();
+
+        IList<TypeModel> GetAllTypes();
     }
 }

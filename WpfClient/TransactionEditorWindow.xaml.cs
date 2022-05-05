@@ -16,7 +16,7 @@ namespace U02B40_HFT_2021221.WpfClient
         {
             InitializeComponent();
             Transaction = transaction == null
-                ? new TransactionModel()
+                ? new TransactionModel() { TransferTime = System.DateTime.Today}
                 : new TransactionModel(transaction);
 
             this.enableEdit = enableEdit;
