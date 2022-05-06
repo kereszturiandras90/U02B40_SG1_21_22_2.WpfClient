@@ -37,12 +37,7 @@ namespace U02B40_HFT_2021221.Logic.Services
 
         public Transaction Create(Transaction entity)
         {
-            // TODO check access
-
-            if(entity.TransferTime > DateTime.Now)
-            {
-                throw new ApplicationException("Please enter a valid time for the transaction!");
-            }
+        
 
             /* if (entity.Id == ' ')
              {
