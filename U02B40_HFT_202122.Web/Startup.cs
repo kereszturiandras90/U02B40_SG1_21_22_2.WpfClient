@@ -24,7 +24,7 @@ namespace U02B40_HFT_2021221.Web
         {
             services.AddRazorPages();
 
-            services.AddCors();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +50,7 @@ namespace U02B40_HFT_2021221.Web
                 endpoints.MapRazorPages();
             });
 
-            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin =>
-true).AllowCredentials());
+           
         }
     }
 }

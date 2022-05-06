@@ -15,7 +15,7 @@
 
     <div id="transaction-handler-app">
         <div class="button-container pb-3" style="text-align:center;">
-            <button class="btn btn-secondary" v-on:click="loadTransctions">Load</button>
+            <button class="btn btn-secondary" v-on:click="loadTransactions">Load</button>
             <button class="btn btn-success" v-on:click="createTransaction">Create</button>
             <button v-if="enabledBackToList" class="btn btn-secondary" v-on:click="backToList">Back to list</button>
         </div>
@@ -41,12 +41,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="transaction in transactions">
-                            <td>{{ transaction.Id }}</td>
-                            <td>{{ transaction.AccountId }}</td>
-                            <td>{{ transaction.Amount }}</td>
-                            <td>{{ transaction.Currency }}</td>
-                            <td>{{ transaction.TransferTime }}</td>
-                            <td>{{ transaction.Type }}</td>
+                            <td>{{ transaction.id }}</td>
+                            <td>{{ transaction.accountId }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.currency }}</td>
+                            <td>{{ transaction.transferTime }}</td>
+                            <td>{{ transaction.type }}</td>
                             <td style="width:20%;text-align:right;">
                                 <button class="btn btn-info" v-on:click="viewTransaction(transaction)">View</button>
                                 <button class="btn btn-warning" v-on:click="editTransaction(transaction)">Edit</button>
@@ -66,7 +66,7 @@
             </template>
             <template v-else>
                 <!--Edit case-->
-                <editor-component v-bind:car="selectedTransaction"
+                <editor-component v-bind:transaction="selectedTransaction"
                                   v-on:saved="savedSuccessfully"
                                   v-on:cancelled="operationCancelled"></editor-component>
             </template>
@@ -74,8 +74,8 @@
     </div>
 </div>
 
-<script src="~/lib/vue/dist/vue.js"></script>
-<script src="~/lib/axios/dist/axios.js"></script>
+<script src="~/lib/vue/vue.js"></script>
+<script src="~/lib/axios/axios.js"></script>
 
 <script type="text/javascript">
     var app = new Vue({
@@ -146,8 +146,8 @@
                 this.selectedTransaction = transaction;
                 this.operationMode = 3;
             },
-            deleteCar: function (transaction) {
-                axi.delete('Delete/' + transaction.Id).then((response) => { // Request body should not works there
+            deleteTransaction: function (transaction) {
+                axi.delete('Delete/' + transaction.id).then((response) => { // Request body should not works there
                     if (response.data.isSuccess) {
                         this.messages.push("Transaction deleted successfully");
                         this.loadTransactions();
@@ -176,7 +176,7 @@
                 setTimeout(() => { this.messages = []; }, 3000);
             },
             operationCancelled() {
-                this.selectedCar = {};
+                this.selectedTransaction = {};
                 this.messages.push("The operation has been cancelled.");
 
                 console.warn("cancelled");
@@ -197,7 +197,9 @@
         data: function () {
             return {
                 innerTransaction: {},
-                brands: [],
+                accounts: [],
+                currencies: [],
+                types: [],
                 isEdit: false,
                 errors: []
             };
@@ -236,42 +238,47 @@
         created: function () {
             if (this.transaction != undefined) {
                 this.isEdit = true;
-
+                console.log('copy called');
                 // Copy
                 this.innerTransaction = {
-                    Id: this.transaction.Id,
-                    AccountId: this.transaction.AccountId,
-                    Amount: this.transaction.Amount,
-                    Currency: this.transaction.Currency,
-                    Type: this.transaction.Type,
-                    TransferTime: this.transaction.TransferTime
+                    id: this.transaction.id,
+                    accountId: this.transaction.accountId,
+                    amount: this.transaction.amount,
+                    currency: this.transaction.currency,
+                    type: this.transaction.type,
+                    transferTime: this.transaction.transferTime
 
                 };
+                console.log(this.innerTransaction);
             } else {
                 // Create new
+                console.log('create called');
                 this.innerTransaction = {
-                    Id: '0',
-                    AccountId: '0',
-                    Amount: '0',
-                    Currency: 'USD',
-                    Type: 'DIV',
-                    TransferTime: Date.now
+                    id: '0',
+                    accountId: '0',
+                    amount: '0',
+                    currency: 'USD',
+                    type: 'DIV',
+                    transferTime: Date.now
                 };
             }
 
             axi.get("GetAllAccounts").then((response) => {
+                console.log(response.data);
                 this.accounts = response.data;
             }).catch((err) => {
                 console.log(err);
             });
 
             axi.get("GetAllCurrencies").then((response) => {
+                console.log(response.data);
                 this.currencies = response.data;
             }).catch((err) => {
                 console.log(err);
             });
 
             axi.get("GetAllTypes").then((response) => {
+                console.log(response.data);
                 this.types = response.data;
             }).catch((err) => {
                 console.log(err);
@@ -284,27 +291,27 @@
     <div style="text-align:left" class="transaction-view-container">
         <div>
             <strong>Id</strong><br />
-            <label>{{ transaction.Id }}</label>
+            <label>{{ transaction.id }}</label>
         </div>
         <div>
             <strong>AccountId Id</strong><br />
-            <label>{{ transaction.AccountId }}</label>
+            <label>{{ transaction.accountId }}</label>
         </div>
         <div>
             <strong>Amount</strong><br />
-            <label>{{ transaction.Amount}}</label>
+            <label>{{ transaction.amount}}</label>
         </div>
         <div>
             <strong>Currency</strong><br />
-            <label>{{ transaction.Currency }}</label>
+            <label>{{ transaction.currency }}</label>
         </div>
         <div>
             <strong>TransferTime</strong><br />
-            <label>{{ transaction.TransferTime }}</label>
+            <label>{{ transaction.transferTime }}</label>
         </div>
         <div>
             <strong>Type</strong><br />
-            <label>{{ transaction.Type }}</label>
+            <label>{{ transaction.type }}</label>
         </div>
     </div>
 </script>
@@ -315,30 +322,30 @@
             <span v-for="msg in errors" style="color:red;font-weight:bold;">{{ msg }}</span>
         </div>
         <div>
-            <strong>Brand</strong><br />
-            <select id="brand-selector" v-model="innerTransaction.AccountId" class="form-control">
-                <option v-for="brand in brands" v-bind:value="brand.id">{{ brand.name }}</option>
+            <strong>AccountId</strong><br />
+            <select id="account-selector" v-model="innerTransaction.accountId" class="form-control">
+                <option v-for="account in accounts" v-bind:value="account.id">{{ account.id }}</option>
             </select>
         </div>
         <div>
             <strong>Amount</strong><br />
-            <input type="text" v-model.number="innerTransaction.Amount" class="form-control" />
+            <input type="text" v-model.number="innerTransaction.amount" class="form-control" />
         </div>
         <div>
             <strong>Currency</strong><br />
-            <select id="currency-selector" v-model="innerTransaction.Currency" class="form-control">
-                <option v-for="Currency in Currencies" v-bind:value="Currency.Currency">{{ Currency.Currency }}</option>
+            <select id="currency-selector" v-model="innerTransaction.currency" class="form-control">
+                <option v-for="currency in currencies" v-bind:value="currency.name">{{ currency.name }}</option>
             </select>
         </div>
         <div>
             <strong>Type</strong><br />
-            <select id="type-selector" v-model="innerTransaction.Type" class="form-control">
-                <option v-for="Type in Types" v-bind:value="Type.Type.id">{{ Type.Type }}</option>
+            <select id="type-selector" v-model="innerTransaction.type" class="form-control">
+                <option v-for="type in types" v-bind:value="type.name">{{ type.name }}</option>
             </select>
         </div>
         <div>
             <strong>TransferTime</strong><br />
-            <input type="date" v-model.number="innerTransaction.TransferTime" class="form-control" />
+            <input type="date" v-model="innerTransaction.transferTime" class="form-control" >{{innerTransaction.transferTime}}</input>
         </div>
         <div class="float-right pt-3">
             <button class="btn btn-primary" v-on:click="save">Mentés</button>

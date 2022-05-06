@@ -148,6 +148,47 @@ namespace U02B40_HFT_2021221.Endpoint.Controllers
         {
             return transactionLogic.GetPersonsWithMinus();
         }
+
+        [HttpGet]
+        [ActionName("GetAllAccounts")]
+        public IEnumerable<AccountDTO> GetAllAccounts()
+        {
+            // TODO: get it from DB
+            return new AccountDTO[]
+            {
+                new AccountDTO() { Id = 1},
+                 new AccountDTO() { Id = 2},
+                  new AccountDTO() { Id = 3},
+            };
+        }
+        [HttpGet]
+        [ActionName("GetAllTypes")]
+        public IEnumerable<TypeDTO> GetAllTypes()
+        {
+            // TODO: get it from DB
+            return new TypeDTO[]
+            {
+                new TypeDTO() {Name ="INT" },
+                 new TypeDTO() {Name ="DIV" },
+                 new TypeDTO() {Name ="STO" },
+                 new TypeDTO() {Name ="нахуй" },
+            };
+        }
+        [HttpGet]
+        [ActionName("GetAllCurrencies")]
+        public IEnumerable<CurrencyDTO> GetAllCurrencies()
+        {
+            // TODO: get it from DB
+            return new CurrencyDTO[]
+            {
+                new CurrencyDTO {Name="USD" },
+                new CurrencyDTO {Name="AUD" },
+                new CurrencyDTO {Name="EUR" },
+                new CurrencyDTO {Name="HUF" },
+                new CurrencyDTO {Name="JMF" },
+                new CurrencyDTO {Name="рубль" },
+            };
+        }
     }
     }
 

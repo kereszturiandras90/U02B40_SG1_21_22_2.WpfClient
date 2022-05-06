@@ -197,7 +197,9 @@
         data: function () {
             return {
                 innerTransaction: {},
-                brands: [],
+                accounts: [],
+                currencies: [],
+                types: [],
                 isEdit: false,
                 errors: []
             };
@@ -239,40 +241,43 @@
 
                 // Copy
                 this.innerTransaction = {
-                    Id: this.transaction.Id,
-                    AccountId: this.transaction.AccountId,
-                    Amount: this.transaction.Amount,
-                    Currency: this.transaction.Currency,
-                    Type: this.transaction.Type,
-                    TransferTime: this.transaction.TransferTime
+                    id: this.transaction.id,
+                    acoountId: this.transaction.acoountId,
+                    amount: this.transaction.amount,
+                    currency: this.transaction.currency,
+                    type: this.transaction.type,
+                    transferTime: this.transaction.transferTime
 
                 };
             } else {
                 // Create new
                 this.innerTransaction = {
-                    Id: '0',
-                    AccountId: '0',
-                    Amount: '0',
-                    Currency: 'USD',
-                    Type: 'DIV',
-                    TransferTime: Date.now
+                    id: '0',
+                    accountId: '0',
+                    amount: '0',
+                    currency: 'USD',
+                    type: 'DIV',
+                    transferTime: Date.now
                 };
             }
 
             axi.get("GetAllAccounts").then((response) => {
                 this.accounts = response.data;
+                console.log(response.data);
             }).catch((err) => {
                 console.log(err);
             });
 
             axi.get("GetAllCurrencies").then((response) => {
                 this.currencies = response.data;
+                console.log(response.data);
             }).catch((err) => {
                 console.log(err);
             });
 
             axi.get("GetAllTypes").then((response) => {
                 this.types = response.data;
+                console.log(response.data);
             }).catch((err) => {
                 console.log(err);
             });
@@ -315,30 +320,30 @@
             <span v-for="msg in errors" style="color:red;font-weight:bold;">{{ msg }}</span>
         </div>
         <div>
-            <strong>Brand</strong><br />
-            <select id="brand-selector" v-model="innerTransaction.AccountId" class="form-control">
-                <option v-for="brand in brands" v-bind:value="brand.id">{{ brand.name }}</option>
+            <strong>AccountId</strong><br />
+            <select id="account-selector" v-model="innerTransaction.accountid" class="form-control">
+                <option v-for="account in accounts" v-bind:value="account.Id">{{ account.Id }}</option>
             </select>
         </div>
         <div>
             <strong>Amount</strong><br />
-            <input type="text" v-model.number="innerTransaction.Amount" class="form-control" />
+            <input type="text" v-model.number="innerTransaction.amount" class="form-control" />
         </div>
         <div>
             <strong>Currency</strong><br />
-            <select id="currency-selector" v-model="innerTransaction.Currency" class="form-control">
-                <option v-for="Currency in Currencies" v-bind:value="Currency.Currency">{{ Currency.Currency }}</option>
+            <select id="currency-selector" v-model="innerTransaction.currency" class="form-control">
+                <option v-for="currency in currencies" v-bind:value="currency.Name">{{ currency.Name }}</option>
             </select>
         </div>
         <div>
             <strong>Type</strong><br />
-            <select id="type-selector" v-model="innerTransaction.Type" class="form-control">
-                <option v-for="Type in Types" v-bind:value="Type.Type.id">{{ Type.Type }}</option>
+            <select id="type-selector" v-model="innerTransaction.type" class="form-control">
+                <option v-for="type in types" v-bind:value="type.Name">{{ type.Name }}</option>
             </select>
         </div>
         <div>
             <strong>TransferTime</strong><br />
-            <input type="date" v-model.number="innerTransaction.TransferTime" class="form-control" />
+            <input type="date" v-model="innerTransaction.transferTime" class="form-control" />
         </div>
         <div class="float-right pt-3">
             <button class="btn btn-primary" v-on:click="save">Mentés</button>

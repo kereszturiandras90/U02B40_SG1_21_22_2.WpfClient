@@ -12,6 +12,7 @@ namespace U02B40_HFT_2021221.Web2
 {
     public class Startup
     {
+        public string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,36 +23,48 @@ namespace U02B40_HFT_2021221.Web2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //   var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             services.AddRazorPages();
+
+            services.AddControllersWithViews();
 
             services.AddCors();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+             public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             {
-                app.UseDeveloperExceptionPage();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Error");
+                }
+
+                app.UseStaticFiles();
+
+                app.UseRouting();
+
+                app.UseAuthorization();
+
+               
+
+            
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
+
+              app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin =>
+    true).AllowCredentials()); 
+
+
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
-
-            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin =>
-true).AllowCredentials());
         }
     }
-}
+
