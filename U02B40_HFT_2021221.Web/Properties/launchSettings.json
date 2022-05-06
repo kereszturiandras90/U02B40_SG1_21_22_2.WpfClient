@@ -1,9 +1,9 @@
 ﻿{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:3244",
+      "applicationUrl": "http://localhost:62589",
       "sslPort": 0
     }
   },
@@ -15,8 +15,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "U02B40_HFT_2021221.Endpoint": {
+    "U02B40_HFT_2021221.Web": {
       "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
